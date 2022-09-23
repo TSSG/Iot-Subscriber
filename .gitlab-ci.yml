@@ -17,7 +17,7 @@ cleanup:
   stage: cleanup
   tags: [storage-manager]
   script:
-    - cd ./src && docker-compose -f docker-compose-test.yml down --rmi local -v --remove-orphans
+    - cd ./src && docker-compose -f docker-compose.yml down --rmi local -v --remove-orphans
     - docker image rm -f edgeflex-base-image:latest
     - echo "Done."
 
