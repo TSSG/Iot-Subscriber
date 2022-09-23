@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  edgeflex-storage-manager:
+    image: edgeflex-base-image
+    logging:
+      options:
+          max-file: "5"
+          max-size: "10m"
+    networks: 
+      - edgeflex-network
+    # Add in the necessary details in the environment variables
+    volumes:
+      - .:/home/app/
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+    command: python3 app.py
+    ports:
+      - 5007:5007
+networks:
+  edgeflex-network:
+    external:
+      name: edgeflex-network
+ 
+

@@ -1,0 +1,23 @@
+stages:
+  - build
+  - cleanup
+
+before_script:
+  - sudo chown -R gitlab-runner:gitlab-runner .
+
+build:
+  stage: build
+  tags: [storage-manager]
+  script:
+    - cd ./src/ && docker build -t edgeflex-base-image -f Dockerfile .
+    - cd ./src && docker-compose up --remove-orphans --force-recreate edgeflex-data-manager
+    - echo "Done."
+
+cleanup:
+  stage: cleanip
+  tags: [storage-manager]
+  script:
+    - cd ./src && docker-compose -f docker-compose-test.yml down --rmi local -v --remove-orphans
+    - docker image rm -f edgeflex-base-image:latest
+    - echo "Done."
+
