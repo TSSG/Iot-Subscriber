@@ -2,7 +2,8 @@ FROM python:3
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 WORKDIR /home/app
-COPY requirements.txt .
+COPY build/requirements.txt .
+COPY src/app.py .
 LABEL author="Jack Jackman"
 LABEL author_contact="jack.jackman@waltoninstitute.ie"
 
