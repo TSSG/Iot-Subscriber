@@ -14,7 +14,7 @@ build:
     - echo "Done."
 
 cleanup:
-  stage: cleanip
+  stage: cleanup
   tags: [storage-manager]
   script:
     - cd ./src && docker-compose -f docker-compose-test.yml down --rmi local -v --remove-orphans
