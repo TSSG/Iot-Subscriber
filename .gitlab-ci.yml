@@ -11,7 +11,7 @@ build:
   script:
     - docker network create edgeflex-network || true
     - docker build -t edgeflex-base-image -f build/Dockerfile .
-    - cd ./build && docker-compose up --remove-orphans --force-recreate edgeflex-storage-manager
+    - cd ./build && docker-compose up -d --remove-orphans --force-recreate edgeflex-storage-manager
     - echo "Done."
 
 cleanup:
