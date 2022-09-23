@@ -9,15 +9,14 @@ build:
   stage: build
   tags: [storage-manager]
   script:
-    - cd ./src/ && docker build -t edgeflex-base-image -f Dockerfile .
-    - cd ./src && docker-compose up --remove-orphans --force-recreate edgeflex-data-manager
+    - docker build -t edgeflex-base-image -f build/Dockerfile .
+    - cd ./build && docker-compose up --remove-orphans --force-recreate edgeflex-storage-manager
     - echo "Done."
 
 cleanup:
   stage: cleanup
   tags: [storage-manager]
   script:
-    - cd ./src && docker-compose -f docker-compose.yml down --rmi local -v --remove-orphans
+    - cd ./build && docker-compose -f docker-compose.yml down --rmi local -v --remove-orphans
     - docker image rm -f edgeflex-base-image:latest
     - echo "Done."
-
