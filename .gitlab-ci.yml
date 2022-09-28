@@ -11,6 +11,7 @@ build:
   tags: [storage-manager]
   script:
     - docker network create edgeflex-network || true
+    - 	cd ./build/ && docker build -t edgeflex-base-image -f Dockerfile .
     - echo "Done."
 
 test:
