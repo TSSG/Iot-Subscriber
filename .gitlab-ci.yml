@@ -22,10 +22,10 @@ test:
     - sudo -u gitlab-runner bash -c 'docker-compose -f build/docker-compose-test.yml up --remove-orphans --force-recreate --exit-code-from edgeflex-storagemanager-test'
     - cd src && sudo chown -R -v gitlab-runner:gitlab-runner ./reports/
     - echo "Done."
-   artifacts:
-     when: always
-     name: "code coverage and quality metrics"
-     paths:
+  artifacts:
+    when: always
+    name: "code coverage and quality metrics"
+    paths:
       - src/reports/htmlcov
 
 
