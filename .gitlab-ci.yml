@@ -10,6 +10,7 @@ build:
   stage: build
   tags: [storage-manager]
   script:
+    - docker network create edgeflex-network || true
     - echo "Done."
 
 test:
@@ -27,7 +28,7 @@ cleanup:
   tags: [storage-manager]
   script:
     - echo "Cleaning up after tests."
-    - sudo chown -R -v gitlab-runner:gitlab-runner uild/reports/
+    - sudo chown -R -v gitlab-runner:gitlab-runner build/reports/
     - sudo rm -rf build/reports/*
     - cd ./build && docker-compose -f docker-compose-test.yml down --rmi local -v --remove-orphans
     - docker network rm edgeflex-network || true
