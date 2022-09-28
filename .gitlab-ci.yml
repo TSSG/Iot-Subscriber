@@ -11,7 +11,7 @@ build:
   tags: [storage-manager]
   script:
     - docker network create edgeflex-network || true
-    - cd ./build/ && docker build -t edgeflex-base-image -f Dockerfile .
+    - docker build -t edgeflex-base-image -f build/Dockerfile .
     - echo "Done."
 
 test:
@@ -19,7 +19,7 @@ test:
   tags: [storage-manager]
   script:
     - echo "Starting storage manager unit tests"
-    - sudo -u gitlab-runner bash -c 'cd ./build && docker-compose -f docker-compose-test.yml up --remove-orphans --force-recreate --exit-code-from edgeflex-storagemanager-test'
+    - sudo -u gitlab-runner bash -c 'cd docker-compose -f build/docker-compose-test.yml up --remove-orphans --force-recreate --exit-code-from edgeflex-storagemanager-test'
     - cd build && sudo chown -R -v gitlab-runner:gitlab-runner ./reports/
     - echo "Done."
 
@@ -31,6 +31,6 @@ cleanup:
     - echo "Cleaning up after tests."
     - sudo chown -R -v gitlab-runner:gitlab-runner build/reports/
     - sudo rm -rf build/reports/*
-    - cd ./build && docker-compose -f docker-compose-test.yml down --rmi local -v --remove-orphans
+    - docker-compose -f build/docker-compose-test.yml down --rmi local -v --remove-orphans
     - docker network rm edgeflex-network || true
     - echo "Done."
