@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   - cleanup
 
 before_script:
@@ -9,16 +10,24 @@ build:
   stage: build
   tags: [storage-manager]
   script:
-    - docker network create edgeflex-network || true
-    - docker build -t edgeflex-base-image -f build/Dockerfile .
-    - cd ./build && docker-compose up -d --remove-orphans --force-recreate edgeflex-storage-manager
+    - echo "Done."
+
+test:
+  stage: test
+  tags: [storage-manager]
+  script:
+    - echo "Starting storage manager unit tests"
+    - sudo -u gitlab-runner bash -c 'cd ./src/build && docker-compose -f docker-compose-test.yml up --remove-orphans --force-recreate --exit-code-from edgeflex-storagemanager-test'
+    - cd src/build && sudo chown -R -v gitlab-runner:gitlab-runner ./reports/
     - echo "Done."
 
 cleanup:
   stage: cleanup
   tags: [storage-manager]
   script:
-    - cd ./build && docker-compose -f docker-compose.yml down --rmi local -v --remove-orphans
-    - docker image rm -f edgeflex-base-image:latest
+    - echo "Cleaning up after tests."
+    - sudo chown -R -v gitlab-runner:gitlab-runner src/build/reports/
+    - sudo rm -rf src/build/reports/*
+    - cd ./src/build && docker-compose -f docker-compose-test.yml down --rmi local -v --remove-orphans
     - docker network rm edgeflex-network || true
     - echo "Done."
