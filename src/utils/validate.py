@@ -1,5 +1,4 @@
 import re
-import json
 import dateutil.parser
 from datetime import datetime
 
