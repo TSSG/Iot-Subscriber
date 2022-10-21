@@ -11,7 +11,7 @@ build:
   tags: [storage-manager]
   script:
     - docker network create edgeflex-network || true
-    - docker build -t edgeflex-base-image -f build/Dockerfile .
+    - docker build -t edgeflex-storage-manager-image -f build/Dockerfile .
     - echo "Done."
 
 test:
@@ -38,5 +38,6 @@ cleanup:
     - sudo chown -R -v gitlab-runner:gitlab-runner src/reports/
     - sudo rm -rf src/reports/*
     - docker-compose -f build/docker-compose-test.yml down --rmi local -v --remove-orphans
+    - docker image rm edgeflex-storage-manager-image || true
     - docker network rm edgeflex-network || true
     - echo "Done."

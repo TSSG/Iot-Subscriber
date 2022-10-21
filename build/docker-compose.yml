@@ -2,7 +2,7 @@ version: '3'
 
 services:
   edgeflex-storage-manager:
-    image: edgeflex-base-image
+    image: edgeflex-storage-manager-image
     logging:
       options:
           max-file: "5"
