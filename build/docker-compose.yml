@@ -9,6 +9,7 @@ services:
           max-size: "10m"
     networks: 
       - edgeflex-network
+    env_file: ../conf.env
     volumes:
       - ..:/home/app/
     environment:

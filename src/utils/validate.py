@@ -1,22 +1,21 @@
 import re
+import json
 import dateutil.parser
 from datetime import datetime
 
-from utils import parsers
+from utils import transform
 
 required_keys = ["fields", "time", "measurement"]
 fields = ["scenario", "mode", "id", "asset", "asset_id"]
 
 
-def validate_data(pload):
+def validate_data(pload, topic):
     # Payload is valid if each required key appears in it
     if all(k in pload.keys() for k in required_keys):
-        print("Payload '", str(pload), "' is valid.")
         valid_pload = pload
     # Check if data can be transformed
     elif any(k in pload.keys() for k in fields):
-        print("Payload '", str(pload), "' can be transformed.")
-        valid_pload = parsers.transform_data(pload)
+        valid_pload = transform.construct_data_item(pload, topic)
     else:
         raise KeyError("KeyError: '", str(pload), "' cannot be inserted into database.")
 
