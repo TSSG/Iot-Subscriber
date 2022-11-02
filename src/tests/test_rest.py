@@ -61,7 +61,7 @@ class TestRest(unittest.TestCase):
         client = mock.MagicMock()
         mock_store.return_value = True
 
-        data = {'topic': 'AGC/device_vpp_agc_1/', 'payload': {"mode": "AGC ", "scenario": "vpp_agc", "time": 1663917144761711104, "active_power": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "agc_ref": 0.0}}
+        data = {'topic': 'database1/AGC/device_vpp_agc_1/', 'payload': {"mode": "AGC ", "scenario": "vpp_agc", "time": 1663917144761711104, "active_power": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "agc_ref": 0.0}}
         valid_pload = {'fields': {'time': 1663917144761711104, 'active_power_1': 0.0, 'active_power_2': 0.0, 'active_power_3': 0.0, 'active_power_4': 0.0, 'active_power_5': 0.0, 'active_power_6': 0.0, 'active_power_7': 0.0, 'active_power_8': 0.0, 'active_power_9': 0.0, 'active_power_10': 0.0, 'agc_ref': 0.0}, 'time': '2022-09-23 07:12:24.761711', 'tags': {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': '', 'mode': 'AGC ', 'scenario': 'vpp_agc'}, 'measurement': 'AGC'}
         topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
 

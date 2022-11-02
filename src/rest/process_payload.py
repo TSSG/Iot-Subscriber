@@ -25,7 +25,8 @@ def process(data, dbs, db_creds):
 
 def store_data(data, client):
     payload = data['payload']
-    topic = transform.split_topic(data['topic'])
+    measurement = data['topic'].partition("/")[2]
+    topic = transform.split_topic(measurement)
 
     valid_pload = validate.validate_data(payload, topic)
 

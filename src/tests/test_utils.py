@@ -5,6 +5,7 @@ from datetime import datetime
 
 from utils import validate, transform
 
+
 class TestTransform(unittest.TestCase):
     def test_construct_data_item(self):
         data_item = json.loads('{"fields": {"time": "2022-10-07 00:00:00", "val_list_1_1": 123.456, "value": 123.456}, "time": "2022-10-07 00:00:00", "tags": {"location": "location_9000", "asset": "9000", "measurement": "operationPower"}, "measurement": "location_9000"}') 
@@ -31,12 +32,11 @@ class TestTransform(unittest.TestCase):
         self.assertDictEqual(example, result)
 
 
-
 class TestValidate(unittest.TestCase):
     def test_validate(self):
         pload = {'fields': {'time': '2022-01-31T00:00:00Z', 'value': 0.0}, 'time': '2022-01-31 00:00:00+00:00', 'measurement': 'location_36'}
         topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
-        
+
         result = validate.validate_data(pload, topic)
 
         self.assertEqual(pload, result)
@@ -45,7 +45,7 @@ class TestValidate(unittest.TestCase):
     def test_validate_transformable(self, mock_parser):
         pload = {'mode': 'AGC', 'scenario': 'vpp_agc', 'time': 1643587200000000000, 'active_power': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'agc_ref': 0.0}
         topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
-        
+
         validate.validate_data(pload, topic)
 
         mock_parser.assert_called_once_with(pload, topic)

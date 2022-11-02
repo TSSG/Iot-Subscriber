@@ -29,7 +29,6 @@ class TestStore(unittest.TestCase):
         mock_write_points.assert_called()
 
     def test_store_readings_none_topic(self):
-
         payload = json.loads('{"time": "2022-01-01 00:00:00.000", "value": 123.456}')
 
         client = MagicMock()
