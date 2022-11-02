@@ -9,6 +9,7 @@ from influxdb import InfluxDBClient
 debug_enabled = ast.literal_eval(str(os.getenv('DEBUG')))
 
 def store_reading(payload, topic, client):
+    """Stores payload in InfluxDB and reports result"""
     try:
         data_item = transform.construct_data_item(payload, topic)
         tags = data_item["tags"]
@@ -25,12 +26,14 @@ def store_reading(payload, topic, client):
         raise AttributeError("The payload or topic cannot be processed or stored")
 
 def get_connection(db_creds):
+    """Returns an InfluxDB client"""
     try:
         return InfluxDBClient(db_creds["db_url"], db_creds["db_port"], db_creds["db_user"], db_creds["db_pass"], db_creds["db_name"])
     except Exception as e:
         print(e)
 
 def get_dbs(client):
+    """Returns a list of available databases for a given InfluxDB client"""
     dbs = []
     database_list = {}
 

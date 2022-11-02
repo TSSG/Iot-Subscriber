@@ -2,7 +2,9 @@ import json
 
 from utils import validate, transform, db_utils
 
+
 def process(data, dbs, db_creds):
+    """Checks if the expected database name is valid and forms a response to the REST request"""
     try:
         try:
             topic = data['topic']
@@ -24,7 +26,9 @@ def process(data, dbs, db_creds):
 
 
 def store_data(data, client):
+    """Routes the data for validation, transformation and storage and checks if storage was successful"""
     payload = data['payload']
+    # Strip database name from topic
     measurement = data['topic'].partition("/")[2]
     topic = transform.split_topic(measurement)
 

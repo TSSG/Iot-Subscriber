@@ -10,6 +10,7 @@ fields = ["scenario", "mode", "id", "asset", "asset_id"]
 
 
 def validate_data(pload, topic):
+    """Checks if incomign payload can be stored or transformed for storage"""
     # Payload is valid if each required key appears in it
     if all(k in pload.keys() for k in required_keys):
         valid_pload = pload
