@@ -22,16 +22,14 @@ def store_reading(payload, topic, client):
         resp = client.write_points(item, tags=tags, protocol=u'json', time_precision="n")
         return resp
     except AttributeError:
-        raise AttributeError("The payload or Topic cannot be processed or stored")
-    except Exception:
-        traceback.print_exc()
+        raise AttributeError("The payload or topic cannot be processed or stored")
 
 def get_connection(db_creds):
     try:
         return InfluxDBClient(db_creds["db_url"], db_creds["db_port"], db_creds["db_user"], db_creds["db_pass"], db_creds["db_name"])
     except Exception as e:
         print(e)
-    
+
 def get_dbs(client):
     dbs = []
     database_list = {}

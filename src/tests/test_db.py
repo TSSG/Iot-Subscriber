@@ -49,13 +49,15 @@ class TestStore(unittest.TestCase):
 
 
 class TestDBUtils(unittest.TestCase):
-    # def test_db_conn_all_creds(self):
-    #     client = db_utils.get_connection({"db_url":"edgeflex-persistance", "db_user":"admin", "db_pass":"admin", "db_port":8086, "db_name":"readings"})
-    #     ready = client.ping()
-    #     client.close()
-    #     self.assertEqual("1.8.3", ready)
-
     def test_db_conn_null_creds(self):
         with self.assertRaises(TypeError):
             db_utils.get_connection()
 
+    def test_get_dbs(self):
+        client = MagicMock()
+        client.get_list_database = MagicMock(return_value=[{"name": "database1"}, {"name": "database2"}])
+
+        expected = ["database1", "database2"]
+        result = db_utils.get_dbs(client)
+
+        self.assertListEqual(expected, result)
