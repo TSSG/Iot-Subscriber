@@ -6,11 +6,13 @@ from utils import validate, transform, db_utils
 def process(data, dbs, db_creds):
     """Checks if the expected database name is valid and forms a response to the REST request"""
     try:
+        if not isinstance(data, dict):
+            return json.dumps({"success": False, "Description": "Request must be in JSON format."}), 400, {'ContentType': 'application/json'}
         try:
             topic = data['topic']
             db = (topic.split("/"))[0]
         except KeyError as error:
-            return json.dumps({"success": False, "Description": '"Request is not in the required format."'}), 400, {'ContentType': 'application/json'}
+            return json.dumps({"success": False, "Description": "Request is not in the required format."}), 400, {'ContentType': 'application/json'}
 
         if db in dbs:
             storage_creds = db_creds
