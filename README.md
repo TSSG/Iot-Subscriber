@@ -30,4 +30,4 @@ The following REST endpoint is available on the storage manager:
 
 * Methods: POST
 * Content: application/json
-* Description: The purpose of this endpoint is to ingest data from the subscriber and data manager. This is not an externally facing endpoint, and it should only be made available to other services within the edgeFLEX platform. The data should be in a particular format, with a `route` key and value which determines the Influx database where the data is to be stored, and a `payload` key and value which is detailed [here](https://gitlab-ee.waltoninstitute.ie/edgeflex/development/edgeflex-storage-manager/-/issues/1).
+* Description: The purpose of this endpoint is to ingest data from the subscriber and data manager. This is not an externally facing endpoint, and it should only be made available to other services within the edgeFLEX platform. The data should be in a particular format, with a `topic` key and value which determines the Influx database where the data is to be stored, and a `payload` key and value which is detailed [here](https://gitlab-ee.waltoninstitute.ie/edgeflex/development/edgeflex-storage-manager/-/issues/1).
