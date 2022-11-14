@@ -67,7 +67,7 @@ class TestRest(unittest.TestCase):
 
         summary, status_code = process_payload.store_data(data, client)
 
-        mock_store.assert_called_once_with(valid_pload, topic, client)
+        mock_store.assert_called_once_with(valid_pload, client)
         self.assertDictEqual(summary, {"success": True, "Description": "Payload stored successfully."})
         self.assertEqual(status_code, 200)
 
