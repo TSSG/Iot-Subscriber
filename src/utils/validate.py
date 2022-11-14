@@ -6,19 +6,18 @@ from datetime import datetime
 from utils import transform
 
 required_keys = ["fields", "time", "measurement"]
-fields = ["scenario", "mode", "id", "asset", "asset_id"]
 
 
 def validate_data(pload, topic):
     """Checks if incomign payload can be stored or transformed for storage"""
     # Payload is valid if each required key appears in it
-    if all(k in pload.keys() for k in required_keys):
-        valid_pload = pload
-    # Check if data can be transformed
-    elif any(k in pload.keys() for k in fields):
-        valid_pload = transform.construct_data_item(pload, topic)
-    else:
-        raise KeyError("KeyError: '", str(pload), "' cannot be inserted into database.")
+    # if all(k in pload.keys() for k in required_keys):
+    #     valid_pload = pload
+    # elif "time" in pload.keys():
+    #     valid_pload = transform.construct_data_item(pload, topic)
+    # else:
+    #     raise KeyError("KeyError: '", str(pload), "' cannot be inserted into database.")
+    valid_pload = transform.construct_data_item(pload, topic)
 
     resolved_time = resolve_time(pload["time"])
     valid_pload["time"] = resolved_time

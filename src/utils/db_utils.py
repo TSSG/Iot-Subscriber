@@ -19,6 +19,8 @@ def store_reading(payload, topic, client):
             print(data_item)
         item = []
         item.append(data_item)
+        print(str(item))
+        print("topic ", str(topic))
         # Set to nanosecond precision
         resp = client.write_points(item, tags=tags, protocol=u'json', time_precision="n")
         return resp
