@@ -30,14 +30,11 @@ def process(data, dbs, db_creds):
 def store_data(data, client):
     """Routes the data for validation, transformation and storage and checks if storage was successful"""
     payload = data['payload']
-    print("payload ", payload)
     # Strip database name from topic
     measurement = data['topic'].partition("/")[2]
     topic = transform.split_topic(measurement)
-    print("topic ", topic)
 
     valid_pload = validate.validate_data(payload, topic)
-    print("valid pload", str(valid_pload))
 
     result = db_utils.store_reading(valid_pload, client)
 

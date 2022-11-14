@@ -1,5 +1,3 @@
-import ast
-import os
 import time
 import requests
 from influxdb import InfluxDBClient
