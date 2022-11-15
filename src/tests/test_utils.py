@@ -34,7 +34,7 @@ class TestTransform(unittest.TestCase):
 
 class TestValidate(unittest.TestCase):
     def test_validate(self):
-        pload = {'fields': {'time': '2022-01-31T00:00:00Z', 'value': 0.0}, 'time': '2022-01-31 00:00:00+00:00', 'measurement': 'location_36'}
+        pload = {'fields': {'time': '2022-12-31T00:00:00Z', 'value': 0.0}, 'time': '2022-12-31 00:00:00+00:00', 'measurement': 'location_36'}
         topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
 
         result = validate.validate_data(pload, topic)
@@ -49,6 +49,16 @@ class TestValidate(unittest.TestCase):
         validate.validate_data(pload, topic)
 
         mock_parser.assert_called_once_with(pload, topic)
+
+    def test_validate_transform_kibernet(self):
+        pload = {'time': '2022-12-31T00:00:00Z', 'value': 0.0}
+        topic = {'location': 'location_36', 'asset': '36', 'measurement': 'operationPower'}
+
+        expected = {'fields': {'time': '2022-12-31T00:00:00Z', 'value': 0.0}, 'tags': {'location': 'location_36', 'asset': '36', 'measurement': 'operationPower'}, 'time': '2022-12-31 00:00:00+00:00', 'measurement': 'location_36'}
+
+        result = validate.validate_data(pload, topic)
+
+        self.assertDictEqual(expected, result)
 
     def test_validate_invalid_payload(self):
         pload = {'notakey': 'notavalue'}

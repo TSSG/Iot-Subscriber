@@ -20,7 +20,7 @@ The following are also created and will be removed with the cleanup:
 edgeflex-network
 ### Images
 edgeflex-storage-manager-image
-python:3
+python:3.12-rc-bullseye
 
 ## Endpoints
 

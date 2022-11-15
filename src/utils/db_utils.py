@@ -1,24 +1,14 @@
-import ast
-import os
 import time
-import traceback
 import requests
-from utils import transform
 from influxdb import InfluxDBClient
 
-debug_enabled = ast.literal_eval(str(os.getenv('DEBUG')))
-
-def store_reading(payload, topic, client):
+def store_reading(payload, client):
     """Stores payload in InfluxDB and reports result"""
     try:
-        data_item = transform.construct_data_item(payload, topic)
-        tags = data_item["tags"]
-        del data_item["tags"]
-        if debug_enabled:
-            print(tags)
-            print(data_item)
+        tags = payload["tags"]
+        del payload["tags"]
         item = []
-        item.append(data_item)
+        item.append(payload)
         # Set to nanosecond precision
         resp = client.write_points(item, tags=tags, protocol=u'json', time_precision="n")
         return resp

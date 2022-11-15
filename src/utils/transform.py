@@ -1,14 +1,8 @@
-import traceback
-import ast
-import os
-import json
 from utils import validate
-from datetime import datetime
-from dateutil.parser._parser import ParserError as prserr
 temporal_fields=["timestamp", "time"]
 to_be_ignored=["meta"]
 taggable_fields = ["scenario", "mode", "id", "asset", "asset_id"]
-debug_enabled = ast.literal_eval(str(os.getenv('DEBUG')))
+
 
 def construct_data_item(pload, topic):
     data_item={}
@@ -71,6 +65,4 @@ def split_topic(topic):
         else:
             tp_delim["taggable_"+str(ndx)] = i
         ndx+=1
-    if debug_enabled:
-            print("Topic"+ str(tp_delim))
     return tp_delim

@@ -36,13 +36,12 @@ def store_data(data, client):
 
     valid_pload = validate.validate_data(payload, topic)
 
-    result = db_utils.store_reading(valid_pload, topic, client)
+    result = db_utils.store_reading(valid_pload, client)
 
     if result:
         summary = {"success": True, "Description": "Payload stored successfully."} 
         status_code = 200
     else:
-        result = False
         summary = {"success": False, "Description": "Could not store payload: \npayload: '" + str(valid_pload) + "' \ntopic: '" + str(topic) + "'"}
         status_code = 400
 
