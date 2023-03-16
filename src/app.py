@@ -8,7 +8,8 @@ from rest import process_payload
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-db_creds = json.loads(str(os.getenv('DB_CREDS')))
+db_creds = json.loads(os.getenv("DB_CREDS"))
+
 client = db_utils.get_connection(db_creds)
 
 dbs = db_utils.get_dbs(client)
