@@ -1,4 +1,7 @@
 __pycache__/
+engine
+influxd.bolt
+influxd.sqlite
 *.pyc
 .DS_Store
 .vscode/settings.json
