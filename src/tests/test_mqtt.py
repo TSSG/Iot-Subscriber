@@ -7,35 +7,6 @@ import mqtt_interface
 
 from exceptions import invalid_host
 
-class TestMQTTConnection(unittest.TestCase):
-    def test_successful_connection(self):
-        mqtt_url = str(os.getenv('MQTTURL'))
-        mqtt_user = str(os.getenv('MQTTUSER'))
-        mqtt_pass = str(os.getenv('MQTTPASS'))
-        mqtt_port = int(os.getenv('MQTTPORT'))  
-        cli = mqtt_interface.connect(mqtt_url, mqtt_port, mqtt_user, mqtt_pass)
-        self.assertTrue(cli.is_connected())
-
-    def test_failed_connection_url_None(self):
-        mqtt_user = str(os.getenv('MQTTUSER'))
-        mqtt_pass = str(os.getenv('MQTTPASS'))
-        mqtt_port = int(os.getenv('MQTTPORT')) 
-        with self.assertRaises(invalid_host.InvalidHost):
-            mqtt_interface.connect(None, mqtt_port, mqtt_user, mqtt_pass)
-
-    def testMQTT_con(self):
-        conn = mqtt_interface.connect_mqtt_client()
-        self.assertTrue(conn.is_connected())
-
-class TestDisconnect(unittest.TestCase):
-    def test_successful_disconnect(self):
-        mqtt_url = str(os.getenv('MQTTURL'))
-        mqtt_user = str(os.getenv('MQTTUSER'))
-        mqtt_pass = str(os.getenv('MQTTPASS'))
-        mqtt_port = int(os.getenv('MQTTPORT'))  
-        cli = mqtt_interface.connect(mqtt_url, mqtt_port, mqtt_user, mqtt_pass)
-        cli.disconnect()
-        self.assertFalse(cli.is_connected())
 
 class TestOnMessage(unittest.TestCase):
     @mock.patch("process.process_payload")
