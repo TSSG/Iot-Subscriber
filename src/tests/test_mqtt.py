@@ -1,11 +1,8 @@
 import unittest
-import os
 import unittest.mock as mock
 import paho.mqtt.client as cl
 
 import mqtt_interface
-
-from exceptions import invalid_host
 
 
 class TestOnMessage(unittest.TestCase):
