@@ -3,69 +3,49 @@ import unittest
 import unittest.mock as mock
 from datetime import datetime
 
-from utils import validate, transform
+import validate
+import transform
 
 
 class TestTransform(unittest.TestCase):
     def test_construct_data_item(self):
-        data_item = json.loads('{"fields": {"time": "2022-10-07 00:00:00", "val_list_1_1": 123.456, "value": 123.456}, "time": "2022-10-07 00:00:00", "tags": {"location": "location_9000", "asset": "9000", "measurement": "operationPower"}, "measurement": "location_9000"}') 
-        topic = json.loads('{"location": "location_9000", "asset": "9000", "measurement": "operationPower"}')
-        payload = json.loads('{"time": "2022-10-07 00:00:00", "val_list": [[123.456]], "value": 123.456}')
+        data_item = json.loads('{"fields": {"value": 50, "val_list_1": 60, "val_list_2": 70, "val_list_3": 80}, "tags": {}, "time": "2023-04-21 06:54:00", "measurement": "measurement1"}') 
+        payload = json.loads('{"time": 1682060040000000000, "value": 50, "val_list": [60, 70, 80], "measurement": "measurement1"}')
 
-        result = transform.construct_data_item(payload, topic)
+        result = transform.construct_data_item(payload)
 
         self.assertDictEqual(result, data_item)
 
     def test_construct_data_item_bad_time(self):
         tst_date = datetime.utcnow()
-        topic = json.loads('{"location": "location_9000", "asset": "9000", "measurement": "operationPower"}')
         payload = json.loads('{"time": "2022-0 00:00:00.000", "val_list": [[123.456]], "value": 123.456}')
 
-        result = transform.construct_data_item(payload, topic)
+        result = transform.construct_data_item(payload)
 
         self.assertTrue(result["time"] >= tst_date)
-
-    def test_split_topic(self):
-        topic = "location_27/27/operationPower"
-        example = {"location": "location_27", "asset":"27", "measurement":"operationPower"}
-        result = transform.split_topic(topic)
-        self.assertDictEqual(example, result)
 
 
 class TestValidate(unittest.TestCase):
     def test_validate(self):
-        pload = {'fields': {'time': '2022-12-31T00:00:00Z', 'value': 0.0}, 'time': '2022-12-31 00:00:00+00:00', 'measurement': 'location_36'}
-        topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
+        pload = {'fields': {'value': 0.0}, 'time': '2022-12-31 00:00:00+00:00', 'measurement': 'location_36'}
 
-        result = validate.validate_data(pload, topic)
+        result = validate.validate_data(pload)
 
         self.assertEqual(pload, result)
 
-    @mock.patch("utils.transform.construct_data_item")
+    @mock.patch("transform.construct_data_item")
     def test_validate_transformable(self, mock_parser):
-        pload = {'mode': 'AGC', 'scenario': 'vpp_agc', 'time': 1643587200000000000, 'active_power': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], 'agc_ref': 0.0}
-        topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
+        pload = {"time": 1682060040000000000, "value": 50, "val_list": [60, 70, 80], "tag1": "waterford", "measurement": "measurement1"}
 
-        validate.validate_data(pload, topic)
+        validate.validate_data(pload)
 
-        mock_parser.assert_called_once_with(pload, topic)
-
-    def test_validate_transform_kibernet(self):
-        pload = {'time': '2022-12-31T00:00:00Z', 'value': 0.0}
-        topic = {'location': 'location_36', 'asset': '36', 'measurement': 'operationPower'}
-
-        expected = {'fields': {'time': '2022-12-31T00:00:00Z', 'value': 0.0}, 'tags': {'location': 'location_36', 'asset': '36', 'measurement': 'operationPower'}, 'time': '2022-12-31 00:00:00+00:00', 'measurement': 'location_36'}
-
-        result = validate.validate_data(pload, topic)
-
-        self.assertDictEqual(expected, result)
+        mock_parser.assert_called_once_with(pload)
 
     def test_validate_invalid_payload(self):
         pload = {'notakey': 'notavalue'}
-        topic = {'location': 'AGC', 'asset': 'device_vpp_agc_1', 'measurement': ''}
 
         with self.assertRaises(KeyError):
-            validate.validate_data(pload, topic)
+            validate.validate_data(pload)
 
     def test_aleady_utc(self):
         time = "2022-07-10 00:00:00.000"

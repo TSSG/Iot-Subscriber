@@ -2,7 +2,7 @@ import unittest
 import json
 from unittest.mock import patch, MagicMock
 
-from utils import db_utils
+import db_utils
 
 
 class TestStore(unittest.TestCase):

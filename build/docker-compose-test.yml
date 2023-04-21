@@ -1,26 +1,27 @@
 version: '3'
 
 services:
-  edgeflex-storagemanager-test:
-    image: edgeflex-storage-manager-image
+  iot-subscriber-test:
+    image: iot-subscriber-image
     logging:
       options:
           max-file: "5"
           max-size: "10m"
     networks: 
-      - edgeflex-network
+      - subscriber-network
     env_file: ../conf.env
     volumes:
       - ..:/home/app/
     environment:
+      - DB_CREDS={"db_url":"my_db", "db_user":"admin", "db_pass":"admin", "db_port":8086, "db_name":"readings"}
       - PYTHONDONTWRITEBYTECODE=1
     command: bash -c "cd src && coverage run -m unittest discover -s tests && coverage html --omit=*/tests/* -d ./reports/htmlcov"
     ports:
       - 5007:5007
-    container_name: edgeflex-storage-manager-test
+    container_name: iot-subscriber-test
 networks:
-  edgeflex-network:
+  subscriber-network:
     external:
-      name: edgeflex-network
+      name: subscriber-network
  
 
