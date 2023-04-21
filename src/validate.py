@@ -1,19 +1,18 @@
 import re
 import dateutil.parser
 from datetime import datetime
-
-from utils import transform
+import transform
 
 required_keys = ["fields", "time", "measurement"]
 
 
-def validate_data(pload, topic):
+def validate_data(pload):
     """Checks if incoming payload can be stored or transformed for storage"""
     # Payload is valid if each required key appears in it
     if all(k in pload.keys() for k in required_keys):
         valid_pload = pload
     elif "time" in pload.keys():
-        valid_pload = transform.construct_data_item(pload, topic)
+        valid_pload = transform.construct_data_item(pload)
     else:
         raise KeyError("KeyError: '", str(pload), "' cannot be inserted into database.")
 
