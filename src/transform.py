@@ -4,7 +4,12 @@ import json
 import validate
 
 temporal_fields = ["timestamp", "time"]
-taggable_fields = json.loads(os.environ['TAGS'])
+try:
+    tags = os.environ['TAGS']
+    if tags is not None:
+        taggable_fields = json.loads(tags)
+except json.decoder.JSONDecodeError:
+    print("(Error): Tags must be supplied in the given format.")
 
 
 def construct_data_item(pload):

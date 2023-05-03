@@ -5,7 +5,7 @@ run:
 
 build_db:
 	cd ./db && \
-	docker-compose up -d
+	docker-compose up --remove-orphans -d --force-recreate 
 
 cleanup:
 	cd ./build && docker-compose -f docker-compose.yml down --rmi local -v --remove-orphans;

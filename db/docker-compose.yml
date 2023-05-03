@@ -9,9 +9,10 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
-    env_file: ../conf.env
+    env_file: ./conf.env
     volumes:
-      - ./storage:/var/lib/influxdb2
+      - $PWD/storage:/var/lib/influxdb2
+      - $PWD/config:/etc/influxdb2
     environment:
       - PYTHONDONTWRITEBYTECODE=1
       - INFLUXDB_CONFIG_PATH=/var/lib/influxdb2

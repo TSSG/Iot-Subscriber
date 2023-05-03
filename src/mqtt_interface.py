@@ -12,7 +12,6 @@ from exceptions import invalid_host
 rand = randint(1000000000, 9999999999)
 
 client = mqc(name = "iot-subscriber-" + str(rand))
-db_creds = json.loads(os.getenv("DB_CREDS"))
 
 
 def on_message(client, userdata, message):
@@ -21,9 +20,9 @@ def on_message(client, userdata, message):
         message_txt = message.payload.decode("utf-8").replace("\x00", "")
         pload = json.loads(message_txt)
         if 'data' in pload.keys():
-            return process.process_payload(pload['data'], topic, db_creds)
+            return process.process_payload(pload['data'], topic)
         else:
-            return process.process_payload(pload, topic, db_creds)
+            return process.process_payload(pload, topic)
     except Exception as error:
         print("(Main) On message error:\n" + str(error))
         traceback.print_exc()
