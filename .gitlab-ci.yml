@@ -1,0 +1,43 @@
+stages:
+  - build
+  - test
+  - cleanup
+
+before_script:
+  - sudo chown -R gitlab-runner:gitlab-runner .
+
+build:
+  stage: build
+  tags: [iot-subscriber]
+  script:
+    - docker network create subscriber-network || true
+    - docker build -t iot-subscriber-image -f build/Dockerfile .
+    - echo "Done."
+
+test:
+  stage: test
+  tags: [iot-subscriber]
+  script:
+    - echo "Starting storage manager unit tests"
+    - sudo -u gitlab-runner bash -c 'docker-compose -f build/docker-compose-test.yml up --remove-orphans --force-recreate --exit-code-from iot-subscriber-test'
+    - cd src && sudo chown -R -v gitlab-runner:gitlab-runner ./reports/
+    - echo "Done."
+  artifacts:
+    when: always
+    name: "code coverage and quality metrics"
+    paths:
+      - src/reports/htmlcov
+
+
+cleanup:
+  when: always
+  stage: cleanup
+  tags: [iot-subscriber]
+  script:
+    - echo "Cleaning up after tests."
+    - sudo chown -R -v gitlab-runner:gitlab-runner src/reports/
+    - sudo rm -rf src/reports/*
+    - docker-compose -f build/docker-compose-test.yml down --rmi local -v --remove-orphans
+    - docker image rm iot-subscriber-image || true
+    - docker network rm subscriber-network || true
+    - echo "Done."

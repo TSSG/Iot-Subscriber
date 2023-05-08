@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  iot-subscriber:
+    image: iot-subscriber-image
+    logging:
+      options:
+          max-file: "5"
+          max-size: "10m"
+    networks: 
+      - subscriber-network
+    env_file: ../conf.env
+    volumes:
+      - ..:/home/app/
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+    command: python3 src/app.py
+    ports:
+      - 5007:5007
+    container_name: iot-subscriber
+networks:
+  subscriber-network:
+    external:
+      name: subscriber-network
+ 
+

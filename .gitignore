@@ -1,0 +1,42 @@
+__pycache__/
+engine
+influxd.bolt
+influxd.sqlite
+*.pyc
+.DS_Store
+.vscode/settings.json
+.pytest_cache
+.vscode
+.coverage
+htmlcov
+bandit_assessment.html
+
+
+# Local python packages
+.python_packages/
+
+# Python Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+lib/
+pyvenv.cfg
+.env
+testfunc/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+#OSX .DS_Store
+.DS_Store
+
+#VS Code
+.vscode
+
