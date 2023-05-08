@@ -1,0 +1,14 @@
+InfluxDB Writer for Telemetry via MQTT in Docker
+Copyright 2023 South East Technological University.
+
+This product includes software developed at the
+Walton Institute (http://waltoninstitute.ie) at the
+South East Technological University
+
+This work was funded under the European Union Horizon 2020 research and innovation programme under grant agreement No 883710, project edgeFLEX (Providing flexibility to the grid by enabling VPPs to offer both fast and slow dynamics control services).
+
+This software contains code derived from Docker.
+
+This software contains code derived from InfluxData.
+
+This software contains code derived from Eclipse Paho.

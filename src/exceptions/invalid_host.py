@@ -1,0 +1,2 @@
+class InvalidHost(Exception):
+    pass
