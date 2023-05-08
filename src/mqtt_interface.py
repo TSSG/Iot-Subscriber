@@ -12,8 +12,11 @@ from exceptions import invalid_host
 rand = randint(1000000000, 9999999999)
 
 client = mqc(name = "iot-subscriber-" + str(rand))
-db_creds = json.loads(os.getenv("DB_CREDS"))
 
+db_creds = {}
+db_creds["url"] = str(os.getenv("DB_URL"))
+db_creds["org"] = str(os.getenv("DB_ORG"))
+db_creds["token"] = str(os.getenv("DB_TOKEN"))
 
 def on_message(client, userdata, message):
     topic = message.topic
