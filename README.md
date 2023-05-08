@@ -15,7 +15,7 @@ This is a utility that captures data from an MQTT broker and routes it to an Inf
 }
 ```
 
-### Sample unstructured data
+### Sample unstructured data:
 ```json
 {
 	"time": 1682050040000,
@@ -43,7 +43,7 @@ The data will persist in `db/storage/` and the configuration in `db/config/` if 
 To deploy the InfluxDB container, `make build_db` from the base directory.
 
 ## Deployment
-To deploy the storage manager, navigate to the base directory in the terminal and 
+To deploy the Subscriber, navigate to the base directory in the terminal and 
 
 `make run` to run the `IoT Subscriber` service.
 
@@ -53,6 +53,6 @@ To deploy the storage manager, navigate to the base directory in the terminal an
 
 Maintained by [Jack Jackman](mailto:jack.jackman@waltoninstitute.ie) at the Walton Institute under the South East Technological University.
 
-This work was funded under the European Union Horizon 2020 research program and developed as part of the edgeFLEX project.
+This work was funded under the European Union Horizon 2020 research and innovation programme under grant agreement No 883710, project edgeFLEX (Providing flexibility to the grid by enabling VPPs to offer both fast and slow dynamics control services).
 
 This utility is released under the [Apache License, version 2.0](https://www.apache.org/licenses/LICENSE-2.0).
