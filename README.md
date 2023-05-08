@@ -1,33 +1,58 @@
-# edgeflex-storage-manager
+# IoT Subscriber
 
-This is the repository for the edgeFLEX storage manager service. The purpose of this service is to route data captured by the subscriber and data manager to the appropriate database within `edgeflex-persistance`. 
+This is a utility that captures data from an MQTT broker and routes it to an InfluxDB database. The routing information provided by the topic under which the data is published in the following format: `bucket/measurement/tag1/tag2/tag3...`. The Subscriber can insert data that is already structured to be written to InfluxDB, or unstructured data where any fields with a name matching one of the tags passed in through the topic are written to the database as tags.
+
+### Sample structured data:
+```json
+{
+	"time": 1682060040000,
+	"fields": {
+		"value": 50
+	},
+	"tags": {
+		"location": "waterford"
+	}
+}
+```
+
+### Sample unstructured data
+```json
+{
+	"time": 1682050040000,
+	"value": 100,
+	"val_list": [60, 70, 80],
+	"location": "waterford"
+}
+```
 
 ## Preconditions
-* git installed and access to the relevant code bases
-* docker installed
-* docker-compose installed
-* An instance of edgeflex-persistance must be running, with the relavent databases created and configured.
-  
+* GNU Make
+* docker & docker-compose
+* Existing InfluxDB containers should be added to the `subscriber-network` docker network. This has been done in the optional deployment below.
+* The conf.env file in the base directory should be populated with credentials for connecting to the MQTT broker and to the InfluxDB container.
+
+## Database deployment (optional)
+In the case where there is no pre-existing InfluxDB container, a method to deploy one has been provided. 
+
+To preconfigure the InfluxDB instance with username, password, retention policy, default bucket, etc, uncomment the first line in `db/conf.env` and fill out the relevant fields. 
+
+The URL for the container should be added to the conf.env at the base directory, eg, `DB_URL=http://iot-subscriber-persistance:8086`. 
+
+The data will persist in `db/storage/` and the configuration in `db/config/` if the InfluxDB container should exit.
+
+To deploy the InfluxDB container, `make build_db` from the base directory.
+
 ## Deployment
 To deploy the storage manager, navigate to the base directory in the terminal and 
 
-`make run` to run the `edgeflex-storage-manager` service.
+`make run` to run the `IoT Subscriber` service.
 
 `make cleanup` to cleanup.
 
-The following are also created and will be removed with the cleanup:
-### Networks
-edgeflex-network
-### Images
-edgeflex-storage-manager-image
-ubuntu:lunar-20230301
+## License
 
-## Endpoints
+Maintained by [Jack Jackman](mailto:jack.jackman@waltoninstitute.ie) at the Walton Institute under the South East Technological University.
 
-The following REST endpoint is available on the storage manager:
+This work was funded under the European Union Horizon 2020 research program and developed as part of the edgeFLEX project.
 
-* Address: `/storage`
-
-* Methods: POST
-* Content: application/json
-* Description: The purpose of this endpoint is to ingest data from the subscriber and data manager. This is not an externally facing endpoint, and it should only be made available to other services within the edgeFLEX platform. The data should be in a particular format, with a `topic` key and value which determines the Influx database where the data is to be stored, and a `payload` key and value which is detailed [here](https://gitlab-ee.waltoninstitute.ie/edgeflex/development/edgeflex-storage-manager/-/issues/1).
+This utility is released under the [Apache License, version 2.0](https://www.apache.org/licenses/LICENSE-2.0).

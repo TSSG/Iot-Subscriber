@@ -4,6 +4,8 @@ services:
   iot-subscriber-persistance:
     image: influxdb:2.7
     container_name: iot-subscriber-persistance
+    networks:
+      - subscriber-network
     restart: always
     logging:
       options:
@@ -18,4 +20,7 @@ services:
       - INFLUXDB_CONFIG_PATH=/var/lib/influxdb2
     ports:
       - 8086:8086
-
+networks:
+  subscriber-network:
+    external:
+      name: subscriber-network

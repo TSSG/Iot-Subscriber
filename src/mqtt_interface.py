@@ -13,6 +13,10 @@ rand = randint(1000000000, 9999999999)
 
 client = mqc(name = "iot-subscriber-" + str(rand))
 
+db_creds = {}
+db_creds["url"] = str(os.getenv("DB_URL"))
+db_creds["org"] = str(os.getenv("DB_ORG"))
+db_creds["token"] = str(os.getenv("DB_TOKEN"))
 
 def on_message(client, userdata, message):
     topic = message.topic
@@ -20,9 +24,9 @@ def on_message(client, userdata, message):
         message_txt = message.payload.decode("utf-8").replace("\x00", "")
         pload = json.loads(message_txt)
         if 'data' in pload.keys():
-            return process.process_payload(pload['data'], topic)
+            return process.process_payload(pload['data'], topic, db_creds)
         else:
-            return process.process_payload(pload, topic)
+            return process.process_payload(pload, topic, db_creds)
     except Exception as error:
         print("(Main) On message error:\n" + str(error))
         traceback.print_exc()

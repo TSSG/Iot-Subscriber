@@ -13,7 +13,7 @@ class TestOnMessage(unittest.TestCase):
 
         topic = 'database1/measurement1'
         payload = {'time': '2022-07-06T09:10:00Z', 'value': 5.292}
-        db_creds = {"db_url":"my_db", "db_user":"admin", "db_pass":"admin", "db_port":8086, "db_name":"readings"}
+        db_creds = {"url": "my-url", "org": "my-org", "token": "my-token"}
 
         mqtt_interface.on_message(None, None, message)
 
