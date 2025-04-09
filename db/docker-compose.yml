@@ -1,8 +1,6 @@
-version: '3'
-
 services:
   iot-subscriber-persistance:
-    image: influxdb:2.7
+    image: influxdb:2.7.11
     container_name: iot-subscriber-persistance
     networks:
       - subscriber-network

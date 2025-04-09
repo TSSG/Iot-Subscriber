@@ -1,6 +1,6 @@
 # IoT Subscriber
 
-This is a utility that captures data from an MQTT broker and routes it to an InfluxDB database. The routing information provided by the topic under which the data is published in the following format: `bucket/measurement/tag1/tag2/tag3...`. The Subscriber can insert data that is already structured to be written to InfluxDB, or unstructured data where any fields with a name matching one of the tags passed in through the topic are written to the database as tags.
+This is a utility that captures data from an MQTT broker and routes it to an InfluxDB 2.X database. The routing information provided by the topic under which the data is published in the following format: `bucket/measurement/tag1/tag2/tag3...`. The Subscriber can insert data that is already structured to be written to InfluxDB, or unstructured data where any fields with a name matching one of the tags passed in through the topic are written to the database as tags.
 
 ### Sample structured data:
 ```json

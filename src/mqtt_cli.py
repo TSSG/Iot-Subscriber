@@ -12,7 +12,7 @@ class MqttClient(object):
         client_nm = "subscriber-base"
         if "name" in kwargs:
             client_nm = kwargs["name"]
-        self.mq_client = paho.Client(client_nm, True)
+        self.mq_client = paho.Client(paho.CallbackAPIVersion.VERSION1, client_nm, True)
         self.connected = False
 
 
