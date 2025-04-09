@@ -20,5 +20,5 @@ services:
       - 8086:8086
 networks:
   subscriber-network:
-    external:
-      name: subscriber-network
+    name: subscriber-network
+    external: true

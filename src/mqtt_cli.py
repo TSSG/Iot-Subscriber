@@ -5,8 +5,6 @@ from exceptions import invalid_host
 
 
 class MqttClient(object):
-
-
     def __init__(self, **kwargs):
 
         client_nm = "subscriber-base"

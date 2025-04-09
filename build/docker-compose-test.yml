@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   iot-subscriber-test:
     image: iot-subscriber-image
@@ -11,7 +9,7 @@ services:
       - subscriber-network
     env_file: ../conf.env
     volumes:
-      - ..:/home/app/
+      - ..:/code
     environment:
       - DB_URL=my-url
       - DB_ORG=my-org
@@ -23,7 +21,5 @@ services:
     container_name: iot-subscriber-test
 networks:
   subscriber-network:
-    external:
-      name: subscriber-network
- 
-
+    name: subscriber-network
+    external: true
