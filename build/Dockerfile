@@ -13,18 +13,9 @@ RUN apt-get update && \
     python3.12-venv \
     python3-pip
 
-#WORKDIR /home/app
-#COPY build/requirements.txt .
-#COPY src/app.py .
-
 WORKDIR /code
 COPY . code/
-#COPY build/requirements.txt /code/
 
 RUN python3 -m venv $PY_ENV
 ENV PATH="${PY_ENV}/bin:$PATH"
 RUN pip install -r code/build/requirements.txt
-
-#RUN pip3 install -r requirements.txt --break-system-packages
-#EXPOSE 5000 5007
-

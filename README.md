@@ -29,6 +29,7 @@ This is a utility that captures data from an MQTT broker and routes it to an Inf
 * GNU Make
 * docker & docker-compose
 * Existing InfluxDB containers should be added to the `subscriber-network` docker network. This has been done in the optional deployment below.
+* A local or remote MQTT broker such as [Eclipse Mosquitto](https://mosquitto.org/).
 * The conf.env file in the base directory should be populated with credentials for connecting to the MQTT broker and to the InfluxDB container.
 
 ## Database deployment (optional)
