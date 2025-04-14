@@ -11,6 +11,9 @@ influxd.sqlite
 htmlcov
 bandit_assessment.html
 
+#Generated configs
+influx-configs/
+mosquitto.conf
 
 # Local python packages
 .python_packages/
