@@ -1,0 +1,24 @@
+services:
+  iot-subscriber-persistance:
+    image: influxdb:2.7.11
+    container_name: iot-subscriber-persistance
+    networks:
+      - subscriber-network
+    restart: always
+    logging:
+      options:
+        max-file: "5"
+        max-size: "10m"
+    env_file: ./conf.env
+    volumes:
+      - $PWD/storage:/var/lib/influxdb2
+      - $PWD/config:/etc/influxdb2
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - INFLUXDB_CONFIG_PATH=/var/lib/influxdb2
+    ports:
+      - 8086:8086
+networks:
+  subscriber-network:
+    name: subscriber-network
+    external: true
